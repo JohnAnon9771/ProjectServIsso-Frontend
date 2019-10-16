@@ -13,18 +13,17 @@ function Login({ history }) {
 
   async function handleLogin(event) {
     event.preventDefault();
+
     if (!email || !pwd) {
       setError("Preencha todos os campos");
-      return error;
     } else {
       try {
-        const response = await api.get("/sessions", { email, pwd });
+        //const response = await api.get("/sessions", { email, pwd });
+        const response = await api.post('/authenticate', { email, pwd })
         login(response.data.token);
         history.push("/app");
       } catch (err) {
         setError("Houve um problema com o login");
-        console.log(err);
-        return error;
       }
     }
   }
@@ -36,6 +35,9 @@ function Login({ history }) {
       <div className="form-wrapper">
         <form onSubmit={handleLogin}>
           <div className="input-block">
+            <p className="msg-error">
+              {error}
+            </p>
             <label>Email</label>
             <input
               id="email"

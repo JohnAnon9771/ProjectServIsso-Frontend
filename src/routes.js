@@ -7,6 +7,7 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { isAuthenticated } from "./services/auth";
 import SignUp from "./pages/SignUp/index";
 import Login from "./pages/Login/index";
+import Home from "./pages/Home/index";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -27,7 +28,7 @@ function Routes() {
       <Switch>
         <Route exact path="/" component={Login} />
         <Route path="/signup" component={SignUp} />
-        <PrivateRoute path="/app" component={() => "Pagina em construção"} />
+        <PrivateRoute path="/app" component={Home} />
         <Route path="*" component={() => "Page Not Found"} />
       </Switch>
     </BrowserRouter>

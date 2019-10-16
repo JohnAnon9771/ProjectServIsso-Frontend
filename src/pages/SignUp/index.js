@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter } from "react-router-dom";
 
 import api from "../../services/api";
+import { login } from "../../services/auth";
+
 import "./styles.css";
 
 function SignUp({ history }) {
@@ -9,6 +11,7 @@ function SignUp({ history }) {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [profession, setProfession] = useState("");
+  const [error, setError] = useState("");
 
   async function handleSignUp(event) {
     event.preventDefault();
@@ -19,15 +22,16 @@ function SignUp({ history }) {
       profession
     });
     if (!name || !email || !pwd || !profession) {
-      alert("Preencha todos os campos");
+      setError("Preencha todos os campos");
     } else {
       try {
-        const { _id } = await response.data;
-        localStorage.setItem("user", _id);
-        history.push("/");
+        const { token } = await response.data;
+        login(response.data.token)
+        history.push("/app");
+        console.log(token)
       } catch (err) {
         console.log(err);
-        alert("Aconteceu um erro");
+        setError("Aconteceu um erro");
       }
     }
   }
@@ -38,6 +42,7 @@ function SignUp({ history }) {
       <div className="form-wrapper">
         <form onSubmit={handleSignUp}>
           <div className="input-block">
+            <p className='msg-error'>{error}</p>
             <label>Nome</label>
             <input
               id="name"
