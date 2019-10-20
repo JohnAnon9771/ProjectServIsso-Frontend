@@ -19,9 +19,9 @@ function Login({ history }) {
     } else {
       try {
         //const response = await api.get("/sessions", { email, pwd });
-        const response = await api.post('/authenticate', { email, pwd })
+        const response = await api.post("/authenticate", { email, pwd });
         login(response.data.token);
-        history.push("/app");
+        history.push("/home");
       } catch (err) {
         setError("Houve um problema com o login");
       }
@@ -35,9 +35,7 @@ function Login({ history }) {
       <div className="form-wrapper">
         <form onSubmit={handleLogin}>
           <div className="input-block">
-            <p className="msg-error">
-              {error}
-            </p>
+            <p className="msg-error">{error}</p>
             <label>Email</label>
             <input
               id="email"
@@ -64,3 +62,7 @@ function Login({ history }) {
 }
 
 export default withRouter(Login);
+
+/**
+ *
+ */
