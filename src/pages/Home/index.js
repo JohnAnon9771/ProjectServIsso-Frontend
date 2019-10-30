@@ -1,8 +1,22 @@
 import React, { useState, useEffect } from "react";
 
-import Posts from './Posts/index';
+import Posts from "./Posts/index";
 
-import { Navbar } from "react-bootstrap";
+import {
+  MDBNavbar,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBNavItem,
+  MDBNavLink,
+  MDBNavbarToggler,
+  MDBCollapse,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
+  MDBIcon,
+  MDBCol
+} from "mdbreact";
 
 import { logout, isAuthenticated } from "../../services/auth";
 import api from "../../services/api";
@@ -23,21 +37,44 @@ function Home({ history }) {
     history.push("/");
   }
 
- 
+  async function getPosts(event) {}
+
   return (
     <>
-      <Navbar>
-        <Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
-        <Navbar.Toggle />
-        <Navbar.Collapse className="justify-content-end">
-          <Navbar.Text>Signed in as:{user.name}</Navbar.Text>
-          <Navbar.Text>
-            <button type="submit" onClick={logoutUser}>
-              Sair
-            </button>
-          </Navbar.Text>
-        </Navbar.Collapse>
-      </Navbar>
+      <MDBNavbar color="default-color" dark expand="md">
+        <MDBNavbarBrand>
+          <strong className="white-text">ServIsso?</strong>
+        </MDBNavbarBrand>
+        <MDBNavbarToggler />
+        <MDBCollapse id="navbarCollapse3" navbar>
+          <MDBNavbarNav left></MDBNavbarNav>
+          <MDBNavbarNav right>
+            <MDBNavItem>
+              <MDBDropdown>
+                <MDBDropdownToggle nav caret>
+                  <MDBIcon icon="user" />
+                </MDBDropdownToggle>
+                <MDBDropdownMenu className="dropdown-default">
+                  <MDBDropdownItem href="#!">{user.name}</MDBDropdownItem>
+                  <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
+                  <MDBDropdownItem href="#!">
+                    Something else here
+                  </MDBDropdownItem>
+                  <MDBDropdownItem onClick={logoutUser}>Sair</MDBDropdownItem>
+                </MDBDropdownMenu>
+              </MDBDropdown>
+            </MDBNavItem>
+              <MDBCol md="10">
+                <input
+                  className="form-control"
+                  type="text"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+              </MDBCol>
+          </MDBNavbarNav>
+        </MDBCollapse>
+      </MDBNavbar>
 
       <Posts />
     </>

@@ -21,7 +21,11 @@ function Login({ history }) {
         //const response = await api.get("/sessions", { email, pwd });
         const response = await api.post("/authenticate", { email, pwd });
         login(response.data.token);
-        history.push("/home");
+        if (response.data.user.email === "admin@admin.gmail.com") {
+          history.push("/admin");
+        } else {
+          history.push("/home");
+        }
       } catch (err) {
         setError("Houve um problema com o login");
       }
@@ -62,7 +66,3 @@ function Login({ history }) {
 }
 
 export default withRouter(Login);
-
-/**
- *
- */

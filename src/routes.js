@@ -29,6 +29,7 @@ function Routes() {
         <Route exact path="/" component={Login} />
         <Route path="/signup" component={SignUp} />
         <PrivateRoute path="/home" component={Home} />
+        <PrivateRoute path="/admin" component={Home} />
         <Route path="*" component={() => "Page Not Found"} />
       </Switch>
     </BrowserRouter>

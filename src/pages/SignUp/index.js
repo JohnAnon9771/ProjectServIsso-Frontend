@@ -15,7 +15,7 @@ function SignUp({ history }) {
 
   async function handleSignUp(event) {
     event.preventDefault();
-    const response = await api.post("/sessions", {
+    const response = await api.post("/", {
       name,
       email,
       pwd,
@@ -26,9 +26,12 @@ function SignUp({ history }) {
     } else {
       try {
         const { token } = await response.data;
-        login(response.data.token)
-        history.push("/app");
-        console.log(token)
+        login(response.data.token);
+        if (response.data.user.email === "admin@admin.gmail.com") {
+          history.push("/admin");
+        } else {
+          history.push("/home");
+        }
       } catch (err) {
         console.log(err);
         setError("Aconteceu um erro");
@@ -42,7 +45,7 @@ function SignUp({ history }) {
       <div className="form-wrapper">
         <form onSubmit={handleSignUp}>
           <div className="input-block">
-            <p className='msg-error'>{error}</p>
+            <p className="msg-error">{error}</p>
             <label>Nome</label>
             <input
               id="name"
