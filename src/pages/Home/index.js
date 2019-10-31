@@ -55,23 +55,19 @@ function Home({ history }) {
                   <MDBIcon icon="user" />
                 </MDBDropdownToggle>
                 <MDBDropdownMenu className="dropdown-default">
-                  <MDBDropdownItem href="#!">{user.name}</MDBDropdownItem>
-                  <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
-                  <MDBDropdownItem href="#!">
-                    Something else here
-                  </MDBDropdownItem>
+                  <MDBDropdownItem>{user.name}</MDBDropdownItem>
                   <MDBDropdownItem onClick={logoutUser}>Sair</MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavItem>
-              <MDBCol md="10">
-                <input
-                  className="form-control"
-                  type="text"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-              </MDBCol>
+            <MDBCol md="10">
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Search"
+                aria-label="Search"
+              />
+            </MDBCol>
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBNavbar>

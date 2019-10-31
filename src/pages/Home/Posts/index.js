@@ -38,6 +38,7 @@ function Posts() {
               <MDBCardBody>
                 <MDBCardTitle>{post.company}</MDBCardTitle>
                 <MDBCardText>{post.description}</MDBCardText>
+                <MDBCardText>{post.category}</MDBCardText>
                 <MDBBtn href="#">MDBBtn</MDBBtn>
               </MDBCardBody>
             </MDBCard>

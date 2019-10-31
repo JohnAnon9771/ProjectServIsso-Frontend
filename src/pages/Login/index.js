@@ -18,7 +18,6 @@ function Login({ history }) {
       setError("Preencha todos os campos");
     } else {
       try {
-        //const response = await api.get("/sessions", { email, pwd });
         const response = await api.post("/authenticate", { email, pwd });
         login(response.data.token);
         if (response.data.user.email === "admin@admin.gmail.com") {

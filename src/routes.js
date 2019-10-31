@@ -8,6 +8,7 @@ import { isAuthenticated } from "./services/auth";
 import SignUp from "./pages/SignUp/index";
 import Login from "./pages/Login/index";
 import Home from "./pages/Home/index";
+import Admin from "./pages/Admin/index"
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -29,7 +30,7 @@ function Routes() {
         <Route exact path="/" component={Login} />
         <Route path="/signup" component={SignUp} />
         <PrivateRoute path="/home" component={Home} />
-        <PrivateRoute path="/admin" component={Home} />
+        <PrivateRoute path="/admin" component={Admin} />
         <Route path="*" component={() => "Page Not Found"} />
       </Switch>
     </BrowserRouter>
