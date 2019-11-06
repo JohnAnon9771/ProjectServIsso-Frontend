@@ -4,13 +4,27 @@ import { Link, withRouter } from "react-router-dom";
 import api from "../../services/api";
 import { login } from "../../services/auth";
 
-import "./styles.css";
+import { useStyles } from "./styles";
+
+import {
+  makeStyles,
+  Container,
+  CssBaseline,
+  Avatar,
+  Typography,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Button,
+  Grid,
+  Box
+} from "@material-ui/core";
 
 function Login({ history }) {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [error, setError] = useState("");
-
+  //função para login
   async function handleLogin(event) {
     event.preventDefault();
 
@@ -30,37 +44,71 @@ function Login({ history }) {
       }
     }
   }
+  //Criando estilos
+  const classes = useStyles();
 
   return (
-    <section className="form-section">
-      <h1>ServIsso?</h1>
-
-      <div className="form-wrapper">
-        <form onSubmit={handleLogin}>
-          <div className="input-block">
-            <p className="msg-error">{error}</p>
-            <label>Email</label>
-            <input
-              id="email"
-              type="text"
-              onChange={event => setEmail(event.target.value)}
-            />
-          </div>
-          <div className="input-block">
-            <label htmlFor="login-email">Senha</label>
-            <input
-              id="login-email"
-              type="password"
-              onChange={event => setPwd(event.target.value)}
-            />
-          </div>
-          <button type="submit" className="btn-login">
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>SrI</Avatar>
+        <Typography style={{ color: "#000" }} component="h1" variant="h5">
+          ServIsso?
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={handleLogin}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={event => setEmail(event.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Senha"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={event => setPwd(event.target.value)}
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Lembrar"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
             Entrar
-          </button>
-          <Link to="/signup">Criar conta</Link>
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Esqueceu a senha?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link to="/signup" variant="body2">
+                {"Sem conta? Cadastre-se"}
+              </Link>
+            </Grid>
+          </Grid>
         </form>
       </div>
-    </section>
+      <Box mt={8}></Box>
+    </Container>
   );
 }
 

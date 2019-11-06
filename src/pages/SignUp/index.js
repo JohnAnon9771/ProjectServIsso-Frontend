@@ -4,7 +4,17 @@ import { Link, withRouter } from "react-router-dom";
 import api from "../../services/api";
 import { login } from "../../services/auth";
 
-import "./styles.css";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Grid,
+  Box,
+  Typography,
+  Container
+} from "@material-ui/core";
+import { useStyles } from "./styles";
 
 function SignUp({ history }) {
   const [name, setName] = useState("");
@@ -25,7 +35,6 @@ function SignUp({ history }) {
       setError("Preencha todos os campos");
     } else {
       try {
-        const { token } = await response.data;
         login(response.data.token);
         if (response.data.user.email === "admin@admin.gmail.com") {
           history.push("/admin");
@@ -38,52 +47,90 @@ function SignUp({ history }) {
       }
     }
   }
-  return (
-    <section className="form-section">
-      <h1>ServIsso?</h1>
+  //definindo css
+  const classes = useStyles();
 
-      <div className="form-wrapper">
-        <form onSubmit={handleSignUp}>
-          <div className="input-block">
-            <p className="msg-error">{error}</p>
-            <label>Nome</label>
-            <input
-              id="name"
-              type="text"
-              onChange={event => setName(event.target.value)}
-            />
-          </div>
-          <div className="input-block">
-            <label htmlFor="login-email">Email</label>
-            <input
-              id="login-email"
-              type="email"
-              onChange={event => setEmail(event.target.value)}
-            />
-          </div>
-          <div className="input-block">
-            <label htmlFor="login-password">Password</label>
-            <input
-              id="login-password"
-              type="password"
-              onChange={event => setPwd(event.target.value)}
-            />
-          </div>
-          <div className="input-block">
-            <label>Profissão</label>
-            <input
-              id="profission"
-              type="text"
-              onChange={event => setProfession(event.target.value)}
-            />
-          </div>
-          <button type="submit" className="btn-login">
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>SrI</Avatar>
+        <Typography component="h1" variant="h5">
+          ServIsso?
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={handleSignUp}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="fname"
+                name="firstName"
+                variant="outlined"
+                required
+                fullWidth
+                id="firstName"
+                label="Nome completo"
+                autoFocus
+                onChange={event => setName(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                autoComplete="email"
+                onChange={event => setEmail(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Senha"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={event => setPwd(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="profession"
+                label="Profissão"
+                type="text"
+                id="profession"
+                onChange={event => setProfession(event.target.value)}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
             Cadastrar
-          </button>
-          <Link to="/">Entrar</Link>
+          </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link to="/" variant="body2">
+                Já tem uma conta? Entre
+              </Link>
+            </Grid>
+          </Grid>
         </form>
       </div>
-    </section>
+      <Box mt={5}></Box>
+    </Container>
   );
 }
 

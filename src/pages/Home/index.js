@@ -2,24 +2,26 @@ import React, { useState, useEffect } from "react";
 
 import Posts from "./Posts/index";
 
-import {
-  MDBNavbar,
-  MDBNavbarBrand,
-  MDBNavbarNav,
-  MDBNavItem,
-  MDBNavLink,
-  MDBNavbarToggler,
-  MDBCollapse,
-  MDBDropdown,
-  MDBDropdownToggle,
-  MDBDropdownMenu,
-  MDBDropdownItem,
-  MDBIcon,
-  MDBCol
-} from "mdbreact";
+import { Link } from "react-router-dom";
 
 import { logout, isAuthenticated } from "../../services/auth";
 import api from "../../services/api";
+
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  InputBase,
+  Menu,
+  MenuItem,
+  Badge,
+  Avatar
+} from "@material-ui/core";
+
+import SearchIcon from "@material-ui/icons/Search";
+
+import { useStyles } from "./styles";
 
 function Home({ history }) {
   const [user, setUser] = useState("");
@@ -27,6 +29,7 @@ function Home({ history }) {
     async function loadUser(event) {
       const response = await api.get("/home");
       setUser(response.data);
+      console.log(response.data);
     }
     loadUser();
   }, []);
@@ -39,38 +42,112 @@ function Home({ history }) {
 
   async function getPosts(event) {}
 
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleProfileMenuOpen = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = event => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem>
+        <Link to="/profile">{user.name}</Link>
+      </MenuItem>
+      <MenuItem onClick={logoutUser}>Sair</MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = "primary-search-account-menu-mobile";
+
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <Link to="/profile">{user.name}</Link>
+      </MenuItem>
+      <MenuItem onClick={logoutUser}>Sair</MenuItem>
+    </Menu>
+  );
+
   return (
     <>
-      <MDBNavbar color="default-color" dark expand="md">
-        <MDBNavbarBrand>
-          <strong className="white-text">ServIsso?</strong>
-        </MDBNavbarBrand>
-        <MDBNavbarToggler />
-        <MDBCollapse id="navbarCollapse3" navbar>
-          <MDBNavbarNav left></MDBNavbarNav>
-          <MDBNavbarNav right>
-            <MDBNavItem>
-              <MDBDropdown>
-                <MDBDropdownToggle nav caret>
-                  <MDBIcon icon="user" />
-                </MDBDropdownToggle>
-                <MDBDropdownMenu className="dropdown-default">
-                  <MDBDropdownItem>{user.name}</MDBDropdownItem>
-                  <MDBDropdownItem onClick={logoutUser}>Sair</MDBDropdownItem>
-                </MDBDropdownMenu>
-              </MDBDropdown>
-            </MDBNavItem>
-            <MDBCol md="10">
-              <input
-                className="form-control"
-                type="text"
-                placeholder="Search"
-                aria-label="Search"
+      <div className={classes.grow}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography className={classes.title} variant="h6" noWrap>
+              ServIsso?
+            </Typography>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+                inputProps={{ "aria-label": "search" }}
               />
-            </MDBCol>
-          </MDBNavbarNav>
-        </MDBCollapse>
-      </MDBNavbar>
+            </div>
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              <Avatar
+                alt="Remy Sharp"
+                src={user.photo_url}
+                className={classes.avatar}
+                aria-controls={menuId}
+                onClick={handleProfileMenuOpen}
+              />
+            </div>
+            <div className={classes.sectionMobile}>
+              <Avatar
+                alt="Remy Sharp"
+                src={user.photo_url}
+                className={classes.avatar}
+                aria-controls={mobileMenuId}
+                onClick={handleMobileMenuOpen}
+              />
+            </div>
+          </Toolbar>
+        </AppBar>
+        {renderMobileMenu}
+        {renderMenu}
+      </div>
 
       <Posts />
     </>

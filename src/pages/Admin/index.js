@@ -34,9 +34,7 @@ function Admin({ history }) {
     history.push("/");
   }
 
-  async function registerPosts() {
-      
-  }
+  async function registerPosts() {}
   return (
     <MDBNavbar color="default-color" dark expand="md">
       <MDBNavbarBrand>
