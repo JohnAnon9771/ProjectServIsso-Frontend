@@ -7,7 +7,6 @@ import { login } from "../../services/auth";
 import { useStyles } from "./styles";
 
 import {
-  makeStyles,
   Container,
   CssBaseline,
   Avatar,
@@ -95,7 +94,7 @@ function Login({ history }) {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link to="" variant="body2">
                 Esqueceu a senha?
               </Link>
             </Grid>

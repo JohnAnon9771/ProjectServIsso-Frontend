@@ -10,16 +10,11 @@ import api from "../../services/api";
 import {
   AppBar,
   Toolbar,
-  IconButton,
   Typography,
-  InputBase,
   Menu,
   MenuItem,
-  Badge,
   Avatar
 } from "@material-ui/core";
-
-import SearchIcon from "@material-ui/icons/Search";
 
 import { useStyles } from "./styles";
 
@@ -29,7 +24,6 @@ function Home({ history }) {
     async function loadUser(event) {
       const response = await api.get("/home");
       setUser(response.data);
-      console.log(response.data);
     }
     loadUser();
   }, []);
@@ -78,7 +72,9 @@ function Home({ history }) {
       onClose={handleMenuClose}
     >
       <MenuItem>
-        <Link to="/profile">{user.name}</Link>
+        <Link to="/profile" style={{ color: "#000" }}>
+          {user.name}
+        </Link>
       </MenuItem>
       <MenuItem onClick={logoutUser}>Sair</MenuItem>
     </Menu>
@@ -111,24 +107,15 @@ function Home({ history }) {
             <Typography className={classes.title} variant="h6" noWrap>
               ServIsso?
             </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <Avatar
                 alt="Remy Sharp"
-                src={user.photo_url}
+                src={
+                  !user.photo
+                    ? "https://img.icons8.com/bubbles/64/000000/gender-neutral-user.png"
+                    : user.photo_url
+                }
                 className={classes.avatar}
                 aria-controls={menuId}
                 onClick={handleProfileMenuOpen}
@@ -137,7 +124,11 @@ function Home({ history }) {
             <div className={classes.sectionMobile}>
               <Avatar
                 alt="Remy Sharp"
-                src={user.photo_url}
+                src={
+                  !user.photo
+                    ? "https://img.icons8.com/bubbles/64/000000/gender-neutral-user.png"
+                    : user.photo_url
+                }
                 className={classes.avatar}
                 aria-controls={mobileMenuId}
                 onClick={handleMobileMenuOpen}

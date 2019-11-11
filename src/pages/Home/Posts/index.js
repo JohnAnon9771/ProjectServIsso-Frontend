@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-import "./style.css";
+import api from "../../../services/api";
 
 import {
-  MDBBtn,
-  MDBCard,
-  MDBCardBody,
-  MDBCardImage,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCol,
-  MDBRow
-} from "mdbreact";
+  Card,
+  Container,
+  CardContent,
+  CardMedia,
+  Typography,
+  Grid
+} from "@material-ui/core";
 
-import api from "../../../services/api";
+import { useStyles } from "./styles.js";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
@@ -24,43 +22,35 @@ function Posts() {
     }
     getPosts();
   }, []);
+  const classes = useStyles();
   return (
-    <>
-      <MDBRow>
+    <Container className={classes.cardGrid} maxWidth="md">
+      <Grid container spacing={4}>
         {posts.map(post => (
-          <MDBCol  key={post._id}>
-            <MDBCard style={{ width: "22rem" }}>
-              <MDBCardImage
-                className="img-fluid"
-                src={post.thumbnail_url}
-                waves
+          <Grid item key={post._id} xs={12} sm={6} md={4}>
+            <Card className={classes.card}>
+              <CardMedia
+                className={classes.cardMedia}
+                image={post.thumbnail_url}
+                title="Image title"
               />
-              <MDBCardBody>
-                <MDBCardTitle>{post.company}</MDBCardTitle>
-                <MDBCardText>{post.description}</MDBCardText>
-                <MDBCardText>{post.category}</MDBCardText>
-                <MDBBtn href="#">MDBBtn</MDBBtn>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
+              <CardContent className={classes.cardContent}>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {post.company}
+                  <p className={classes.subContent}>{post.city}</p>
+                </Typography>
+                <Typography>{post.description}</Typography>
+                <Typography className={classes.subContent}>
+                  {post.category}
+                </Typography>
+              </CardContent>
+              <CardContent>{post.createdAt}</CardContent>
+            </Card>
+          </Grid>
         ))}
-      </MDBRow>
-    </>
+      </Grid>
+    </Container>
   );
 }
 
 export default Posts;
-
-/**
- *
-  <ul className="spot-list">
-        {posts.map(post => (
-          <li key={post._id}>
-            <header style={{ backgroundImage: `url(${post.thumbnail_url})` }} />
-            <strong>{post.company}</strong>
-            <p>{post.description}</p>
-            <span>{post.category.map(cat => cat.split(','))}</span>
-          </li>
-        ))}
-      </ul>
- */
