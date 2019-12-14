@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "./auth";
 
 const api = axios.create({
-  baseURL: "http://localhost:3333"
+  baseURL: "https://servisso-api.herokuapp.com/"
 });
 //interceptors -> intercepta uma requesiçaõ
 //request -> requisição
