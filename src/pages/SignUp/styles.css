@@ -1,0 +1,25 @@
+label#thumbnail {
+  left: 25%;
+  top: 25%;
+  bottom: 25%;
+  right: 25%;
+  opacity: 9;
+
+  box-shadow: 0 2px 5px #000;
+  border-radius: 5px;
+  text-align: center;
+  background-size: 100% 100%;
+  display: flex;
+}
+
+label#thumbnail input {
+  display: none;
+}
+
+label#thumbnail.has-thumbnail {
+  border: 0;
+}
+
+label#thumbnail.has-thumbnail img {
+  display: none;
+}

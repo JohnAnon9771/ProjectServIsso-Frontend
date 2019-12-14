@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Link, withRouter } from "react-router-dom";
 
 import api from "../../services/api";
@@ -14,6 +14,7 @@ import {
   Typography,
   Container
 } from "@material-ui/core";
+import "./styles.css";
 import { useStyles } from "./styles";
 
 function SignUp({ history }) {
@@ -21,16 +22,29 @@ function SignUp({ history }) {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [profession, setProfession] = useState("");
+  const [description, setDescription] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [city, setCity] = useState("");
+  const [thumbnail, setThumbnail] = useState(null);
   const [error, setError] = useState("");
+
+  const preview = useMemo(() => {
+    return thumbnail ? URL.createObjectURL(thumbnail) : null;
+  }, [thumbnail]);
 
   async function handleSignUp(event) {
     event.preventDefault();
-    const response = await api.post("/", {
-      name,
-      email,
-      pwd,
-      profession
-    });
+    const data = new FormData();
+
+    data.append("photo", thumbnail);
+    data.append("name", name);
+    data.append("pwd", pwd);
+    data.append("profession", profession);
+    data.append("description", description);
+    data.append("phoneNumber", phoneNumber);
+    data.append("city", city);
+
+    const response = await api.post("/", data);
     if (!name || !email || !pwd || !profession) {
       setError("Preencha todos os campos");
     } else {
@@ -110,6 +124,56 @@ function SignUp({ history }) {
                 onChange={event => setProfession(event.target.value)}
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                multiline
+                name="description"
+                label="Descreva sua profissão"
+                type="text"
+                id="description"
+                onChange={event => setDescription(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="city"
+                label="Sua cidade de atuação"
+                type="text"
+                id="city"
+                onChange={event => setCity(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="phoneNumber"
+                label="Seu numero de whatsapp"
+                type="tel"
+                id="phoneNumber"
+                onChange={event => setPhoneNumber(event.target.value)}
+              />
+            </Grid>
+            <label
+              id="thumbnail"
+              style={{ backgroundImage: `url(${preview})` }}
+            >
+              <input
+                type="file"
+                onChange={event => setThumbnail(event.target.files[0])}
+              />
+              <img
+                src="https://img.icons8.com/windows/32/000000/old-time-camera.png"
+                alt="Select img"
+              />
+            </label>
           </Grid>
           <Button
             type="submit"

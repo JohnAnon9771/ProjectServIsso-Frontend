@@ -28,11 +28,11 @@ function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Login} />
+        {/* <Route exact path="/" component={Login} /> */}
         <Route path="/signup" component={SignUp} />
-        <PrivateRoute path="/home" component={Home} />
+        {/* <PrivateRoute path="/home" component={Home} />
         <PrivateRoute path="/profile" component={Profile} />
-        <PrivateRoute path="/admin" component={Admin} />
+        <PrivateRoute path="/admin" component={Admin} /> */}
         <Route path="*" component={() => "Page Not Found"} />
       </Switch>
     </BrowserRouter>
