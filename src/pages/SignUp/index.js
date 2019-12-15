@@ -2,7 +2,6 @@ import React, { useState, useMemo } from "react";
 import { Link, withRouter } from "react-router-dom";
 
 import api from "../../services/api";
-import { login } from "../../services/auth";
 
 import {
   Avatar,
@@ -68,10 +67,12 @@ function SignUp({ history }) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>SrI</Avatar>
         <Typography component="h1" variant="h5">
-          ServIsso?
+          Serv<strong style={{ color: "#7159c1" }}>Isso?</strong>
         </Typography>
+        <p>
+          Obs: Recomendamos o uso de um computador para uma melhor experiência.
+        </p>
         <form className={classes.form} noValidate onSubmit={handleSignUp}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -168,6 +169,7 @@ function SignUp({ history }) {
             >
               <input
                 type="file"
+                accept="image/*"
                 onChange={event => setPhoto(event.target.files[0])}
               />
               <img
@@ -185,13 +187,6 @@ function SignUp({ history }) {
           >
             Cadastrar
           </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link to="/" variant="body2">
-                Já tem uma conta? Entre
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={5}></Box>

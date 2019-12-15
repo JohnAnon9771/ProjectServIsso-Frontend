@@ -1,15 +1,14 @@
 label#thumbnail {
-  left: 25%;
-  top: 25%;
-  bottom: 25%;
-  right: 25%;
-  opacity: 9;
-
-  box-shadow: 0 2px 5px #000;
+  height: 200px;
+  width: 400px;
+  background-size: cover;
   border-radius: 5px;
+  border: 1px dashed gray;
   text-align: center;
-  background-size: 100% 100%;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  background-position: 50% 50%;
 }
 
 label#thumbnail input {
