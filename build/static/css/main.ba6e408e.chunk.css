@@ -1,0 +1,2 @@
+label#thumbnail{height:200px;width:400px;background-size:cover;border-radius:5px;border:1px dashed grey;text-align:center;display:flex;align-items:center;justify-content:center;background-position:50% 50%}label#thumbnail input{display:none}label#thumbnail.has-thumbnail{border:0}label#thumbnail.has-thumbnail img{display:none}
+/*# sourceMappingURL=main.ba6e408e.chunk.css.map */

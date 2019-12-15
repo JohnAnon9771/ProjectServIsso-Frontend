@@ -167,6 +167,7 @@ function SignUp({ history }) {
               id="thumbnail"
               style={{ backgroundImage: `url(${preview})` }}
             >
+              {!preview ? <p>Imagem de perfil obrigatorio*</p> : ""}
               <input
                 type="file"
                 accept="image/*"
