@@ -25,19 +25,20 @@ function SignUp({ history }) {
   const [description, setDescription] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [city, setCity] = useState("");
-  const [thumbnail, setThumbnail] = useState(null);
+  const [photo, setPhoto] = useState(null);
   const [error, setError] = useState("");
 
   const preview = useMemo(() => {
-    return thumbnail ? URL.createObjectURL(thumbnail) : null;
-  }, [thumbnail]);
+    return photo ? URL.createObjectURL(photo) : null;
+  }, [photo]);
 
   async function handleSignUp(event) {
     event.preventDefault();
     const data = new FormData();
 
-    data.append("photo", thumbnail);
+    data.append("photo", photo);
     data.append("name", name);
+    data.append("email", email);
     data.append("pwd", pwd);
     data.append("profession", profession);
     data.append("description", description);
@@ -49,11 +50,10 @@ function SignUp({ history }) {
       setError("Preencha todos os campos");
     } else {
       try {
-        login(response.data.token);
-        if (response.data.user.email === "admin@admin.gmail.com") {
-          history.push("/admin");
+        if (response.data) {
+          alert("Cadastrado com sucesso!!");
         } else {
-          history.push("/home");
+          alert("Erro no cadastro!!");
         }
       } catch (err) {
         console.log(err);
@@ -95,6 +95,7 @@ function SignUp({ history }) {
                 id="email"
                 label="Email"
                 name="email"
+                type="email"
                 autoComplete="email"
                 onChange={event => setEmail(event.target.value)}
               />
@@ -167,7 +168,7 @@ function SignUp({ history }) {
             >
               <input
                 type="file"
-                onChange={event => setThumbnail(event.target.files[0])}
+                onChange={event => setPhoto(event.target.files[0])}
               />
               <img
                 src="https://img.icons8.com/windows/32/000000/old-time-camera.png"
